@@ -9,7 +9,7 @@ import Button from './components/Button/Button.vue'
   <Button type="warning">按钮</Button>
   <Button type="danger">按钮</Button>
   <Button type="info">按钮</Button>
-  
+
   <Button type="primary" size="large">按钮</Button>
   <Button type="primary" size="small">按钮</Button>
   <Button type="primary" round>按钮</Button>
