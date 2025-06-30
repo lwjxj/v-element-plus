@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import Item from './components/Collapse/CollapseItem.vue'
+import Icon from './components/Icon/Icon.vue'
 
 const openedValue = ref(['a'])
 
@@ -27,7 +28,8 @@ onMounted(() => {
   <Button type="primary" circle>按钮</Button>
   <Button type="primary" plain>按钮</Button>
   <Button type="primary" disabled>按钮</Button>
-  <Button type="primary" loading>按钮</Button>
+  <Button size="large" loading>Loading</Button>
+  <Button size="large" icon="arrow-up">Icon</Button><br /><br />
 
   <div style="margin-top: 50px">
     <Collapse v-model="openedValue">
