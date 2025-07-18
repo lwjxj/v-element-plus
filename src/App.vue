@@ -3,7 +3,6 @@ import { ref, onMounted } from 'vue'
 import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import Item from './components/Collapse/CollapseItem.vue'
-import Icon from './components/Icon/Icon.vue'
 
 const openedValue = ref(['a'])
 
