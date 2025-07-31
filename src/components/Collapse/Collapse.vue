@@ -9,7 +9,7 @@ defineOptions({
 const props = defineProps<CollapseProps>()
 const emits = defineEmits<CollapseEmits>()
 
-const activeNames = ref<NameType[]>([])
+const activeNames = ref<NameType[]>(props.modelValue)
 
 const handleItemClick = (item: NameType) => {
   let _activeNames = [...activeNames.value]

@@ -53,11 +53,11 @@ const transitionEvents: Record<string, (el: HTMLElement) => void> = {
       :id="`item-header-${name}`"
       @click="handleClick"
     >
-      <slot name="header">{{ title }}</slot>
+      <slot name="title">{{ title }}</slot>
       <Icon icon="angle-right" class="header-angle" />
     </div>
     <Transition name="slide" v-on="transitionEvents">
-      <div v-show="isActive" class="vk-collapse-item__wrapper">
+      <div class="vk-collapse-item__wrapper" v-show="isActive">
         <div class="vk-collapse-item__content" :id="`item-content-${name}`">
           <slot />
         </div>
