@@ -8,11 +8,12 @@ import Tooltip from './components/Tooltip/Tooltip.vue'
 const openedValue = ref(['a'])
 let setTimeoutId: ReturnType<typeof setTimeout>
 const trigger = ref<any>('click')
+const tooltipRef = ref<HTMLElement>()
 
 onMounted(() => {
   setTimeoutId = setTimeout(() => {
     openedValue.value = ['a']
-    trigger.value = 'hover'
+    // trigger.value = 'hover'
   }, 2000)
 })
 
@@ -23,8 +24,8 @@ onUnmounted(() => {
 
 <template>
   <h2>Button</h2>
-  <Button type="primary">按钮</Button>
-  <Button type="success">按钮</Button>
+  <Button type="primary" @click="tooltipRef?.show()">按钮</Button>
+  <Button type="success" @click="tooltipRef?.hide()">按钮</Button>
   <Button type="warning">按钮</Button>
   <Button type="danger">按钮</Button>
   <Button type="info">按钮</Button>
@@ -57,7 +58,14 @@ onUnmounted(() => {
 
   <div style="margin-top: 50px">
     <h2>Tooltip</h2>
-    <Tooltip content="hello world" :trigger="trigger" placement="right">
+    <Tooltip
+      ref="tooltipRef"
+      content="hello world"
+      :trigger="trigger"
+      placement="right"
+      :open-delay="100"
+      :close-delay="100"
+    >
       <Button type="primary" style="margin: 10px">按钮</Button>
     </Tooltip>
   </div>
