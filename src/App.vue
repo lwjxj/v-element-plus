@@ -1,22 +1,31 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import Item from './components/Collapse/CollapseItem.vue'
+import Tooltip from './components/Tooltip/Tooltip.vue'
 
 const openedValue = ref(['a'])
+let setTimeoutId: ReturnType<typeof setTimeout>
+const trigger = ref<any>('click')
+const tooltipRef = ref<HTMLElement>()
 
 onMounted(() => {
-  setTimeout(() => {
-    openedValue.value = ['a', 'b']
+  setTimeoutId = setTimeout(() => {
+    openedValue.value = ['a']
+    // trigger.value = 'hover'
   }, 2000)
+})
+
+onUnmounted(() => {
+  clearTimeout(setTimeoutId)
 })
 </script>
 
 <template>
-  <h2>按钮</h2>
-  <Button type="primary">按钮</Button>
-  <Button type="success">按钮</Button>
+  <h2>Button</h2>
+  <Button type="primary" @click="tooltipRef?.show()">按钮</Button>
+  <Button type="success" @click="tooltipRef?.hide()">按钮</Button>
   <Button type="warning">按钮</Button>
   <Button type="danger">按钮</Button>
   <Button type="info">按钮</Button>
@@ -31,7 +40,8 @@ onMounted(() => {
   <Button size="large" icon="arrow-up">Icon</Button><br /><br />
 
   <div style="margin-top: 50px">
-    <Collapse v-model="openedValue">
+    <h2>Collapse</h2>
+    <Collapse v-model="openedValue" accordion>
       <Item name="a" title="标题1">
         <div>这是标题1</div>
       </Item>
@@ -44,6 +54,20 @@ onMounted(() => {
     </Collapse>
 
     <p style="margin-top: 20px">{{ openedValue }}</p>
+  </div>
+
+  <div style="margin-top: 50px">
+    <h2>Tooltip</h2>
+    <Tooltip
+      ref="tooltipRef"
+      content="hello world"
+      :trigger="trigger"
+      placement="right"
+      :open-delay="100"
+      :close-delay="100"
+    >
+      <Button type="primary" style="margin: 10px">按钮</Button>
+    </Tooltip>
   </div>
 </template>
 
