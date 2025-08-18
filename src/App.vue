@@ -1,14 +1,33 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, h } from 'vue'
 import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import Item from './components/Collapse/CollapseItem.vue'
 import Tooltip from './components/Tooltip/Tooltip.vue'
+import Dropdown from './components/Dropdown/Dropdown.vue'
+import type { MenuOption } from '@/components/Dropdown/types.ts'
 
 const openedValue = ref(['a'])
 let setTimeoutId: ReturnType<typeof setTimeout>
-const trigger = ref<any>('click')
+const trigger = ref<'hover' | 'click'>('click')
 const tooltipRef = ref<HTMLElement>()
+
+const menuOptions: MenuOption[] = [
+  {
+    key: 'a',
+    label: h('b', 'this is bold')
+  },
+  {
+    key: 'b',
+    label: 'b',
+    divided: true
+  },
+  {
+    key: 'c',
+    label: 'c',
+    disabled: true
+  }
+]
 
 onMounted(() => {
   setTimeoutId = setTimeout(() => {
@@ -68,6 +87,13 @@ onUnmounted(() => {
     >
       <Button type="primary" style="margin: 10px">按钮</Button>
     </Tooltip>
+  </div>
+
+  <div style="margin-top: 50px">
+    <h2>Dropdown</h2>
+    <Dropdown placement="bottom" :trigger="trigger" :menu-options="menuOptions">
+      <button style="margin-bottom: 10px">Dropdown</button>
+    </Dropdown>
   </div>
 </template>
 

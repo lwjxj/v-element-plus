@@ -12,17 +12,24 @@ import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 export default defineConfigWithVueTs(
   {
     name: 'app/files-to-lint',
-    files: ['**/*.{ts,mts,tsx,vue}'],
+    files: ['**/*.{ts,mts,tsx,vue}']
   },
 
   globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
 
   pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
-  
+
+  // 添加ESLint规则配置
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off'
+    }
+  },
+
   {
     ...pluginVitest.configs.recommended,
-    files: ['src/**/__tests__/*'],
+    files: ['src/**/__tests__/*']
   },
-  skipFormatting,
+  skipFormatting
 )
