@@ -4,7 +4,7 @@ import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import Item from './components/Collapse/CollapseItem.vue'
 import Tooltip from './components/Tooltip/Tooltip.vue'
-import Dropdown from './components/Dropdown/Dropdown.vue'
+import Dropdown from './components/Dropdown/Dropdown.tsx'
 import type { MenuOption } from '@/components/Dropdown/types.ts'
 
 const openedValue = ref(['a'])
