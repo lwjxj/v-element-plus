@@ -6,6 +6,8 @@ import Item from './components/Collapse/CollapseItem.vue'
 import Tooltip from './components/Tooltip/Tooltip.vue'
 import Dropdown from './components/Dropdown/Dropdown.tsx'
 import type { MenuOption } from '@/components/Dropdown/types.ts'
+import { createMessage } from '@/components/Message/method.ts'
+// import Message from './components/Message/Message.vue'
 
 const openedValue = ref(['a'])
 let setTimeoutId: ReturnType<typeof setTimeout>
@@ -30,6 +32,9 @@ const menuOptions: MenuOption[] = [
 ]
 
 onMounted(() => {
+  createMessage({ message: 'Hello Message1!', duration: 0 })
+  createMessage({ message: 'Hello Message2!', duration: 0 })
+  // createMessage({ message: 'Hello Message3!', duration: 0 })
   setTimeoutId = setTimeout(() => {
     openedValue.value = ['a']
     // trigger.value = 'hover'
@@ -42,6 +47,8 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <!--  <Message message="Hello Message" />-->
+
   <h2>Button</h2>
   <Button type="primary" @click="tooltipRef?.show()">按钮</Button>
   <Button type="success" @click="tooltipRef?.hide()">按钮</Button>
