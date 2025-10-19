@@ -4,10 +4,12 @@ export interface MessageProps {
   message?: string | VNode
   duration?: number
   showClose?: boolean
-  type?: 'info' | 'success' | 'warning' | 'error'
+  type?: 'info' | 'success' | 'warning' | 'danger'
   onDestroy?: () => void
   offset?: number
   id?: string
+  zIndex?: number
+  transitionName?: string
 }
 
 export interface MessageContext {
@@ -15,4 +17,5 @@ export interface MessageContext {
   vnode: VNode
   vm: ComponentInternalInstance
   props: MessageProps
+  destroy: () => void
 }

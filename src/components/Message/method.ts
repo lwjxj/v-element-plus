@@ -1,21 +1,33 @@
-import { render, h } from 'vue'
+import { render, h, shallowReactive } from 'vue'
 import type { MessageProps, MessageContext } from './types'
 import MessageConstructor from './Message.vue'
+import useZIndex from '@/hooks/useZIndex.ts'
 
 let seed = 1
-const instances: MessageContext[] = []
+const instances: MessageContext[] = shallowReactive([])
 export const createMessage = (props: MessageProps) => {
   const id = `message_${seed++}`
   const container = document.createElement('div')
+  const { nextZIndex } = useZIndex()
   const destroy = () => {
     const index = instances.findIndex((item) => item.id === id)
     if (index === -1) return
     instances.splice(index, 1)
     render(null, container)
   }
+
+  // 手动调用删除，改变暴露出来的visible值
+  const manualDestroy = () => {
+    const instance = instances.find((item) => item.id === id)
+    if (instance) {
+      instance.vm.exposed!.visible.value = false
+    }
+  }
+
   const newProps = {
     ...props,
     id,
+    zIndex: nextZIndex(),
     onDestroy: destroy
   }
   const vNode = h(MessageConstructor, newProps)
@@ -27,7 +39,8 @@ export const createMessage = (props: MessageProps) => {
     id,
     vnode: vNode,
     vm,
-    props: newProps
+    props: newProps,
+    destroy: manualDestroy
   }
   instances.push(instance)
   return instance

@@ -32,12 +32,19 @@ const menuOptions: MenuOption[] = [
 ]
 
 onMounted(() => {
-  createMessage({ message: 'Hello Message1!', duration: 0 })
-  createMessage({ message: 'Hello Message2!', duration: 0 })
-  // createMessage({ message: 'Hello Message3!', duration: 0 })
+  const instance1 = createMessage({
+    message: 'Hello Message1!',
+    duration: 3000,
+    showClose: true,
+    type: 'info'
+  })
+  createMessage({ message: 'Hello Message2!', duration: 0, showClose: true, type: 'success' })
+  createMessage({ message: 'Hello Message3!', duration: 0, showClose: true, type: 'warning' })
+  createMessage({ message: 'Hello Message3!', duration: 0, showClose: true, type: 'danger' })
   setTimeoutId = setTimeout(() => {
     openedValue.value = ['a']
     // trigger.value = 'hover'
+    // instance1.destroy()
   }, 2000)
 })
 
