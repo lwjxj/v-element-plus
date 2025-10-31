@@ -1,18 +1,17 @@
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const zIndex = ref(0)
-const useZIndex = (initValue = 2000) => {
-  const initZIndex = ref(initValue)
-  const currentZIndex = computed(() => zIndex.value + initZIndex.value)
+const useZIndex = (initialValue = 2000) => {
+  const initialZIndex = ref(initialValue)
+  const currentZIndex = computed(() => zIndex.value + initialZIndex.value)
   const nextZIndex = () => {
-    zIndex.value++
+    zIndex.value ++
     return currentZIndex.value
   }
-
   return {
-    initZIndex,
     currentZIndex,
-    nextZIndex
+    nextZIndex,
+    initialZIndex
   }
 }
 
