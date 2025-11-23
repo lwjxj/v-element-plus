@@ -8,6 +8,7 @@ import Dropdown from './components/Dropdown/Dropdown.tsx'
 import type { MenuOption } from '@/components/Dropdown/types.ts'
 import { createMessage } from '@/components/Message/method.ts'
 // import Message from './components/Message/Message.vue'
+import Input from './components/Input/Input.vue'
 
 const openedValue = ref(['a'])
 let setTimeoutId: ReturnType<typeof setTimeout>
@@ -30,6 +31,8 @@ const menuOptions: MenuOption[] = [
     disabled: true
   }
 ]
+
+const inputValue = ref('123')
 
 onMounted(() => {
   const instance1 = createMessage({
@@ -109,6 +112,9 @@ onUnmounted(() => {
       <button style="margin-bottom: 10px">Dropdown</button>
     </Dropdown>
   </div>
+
+  <h2>Input</h2>
+  <Input v-model="inputValue" clearable />
 </template>
 
 <style scoped></style>

@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, useAttrs, nextTick } from 'vue'
+import type { Ref } from 'vue'
 import type { InputProps, InputEmits } from './types.ts'
 import Icon from '../Icon/Icon.vue'
 
 defineOptions({
-  name: 'VKInput'
+  name: 'VKInput',
+  inheritAttrs: false
 })
 
-const props = withDefaults(defineProps<InputProps>(), { type: 'text' })
+const props = withDefaults(defineProps<InputProps>(), { type: 'text', autoComplete: 'off' })
 const emits = defineEmits<InputEmits>()
-
+const attrs = useAttrs()
 const innerValue = ref(props.modelValue)
+const inputRef = ref() as Ref<HTMLInputElement>
 
 const handleInput = () => {
   emits('update:modelValue', innerValue.value)
@@ -34,6 +37,11 @@ const showClear = computed(
   () => innerValue.value && props.clearable && !props.disabled && isFocus.value
 )
 
+const keepFocus = async () => {
+  await nextTick()
+  inputRef.value.focus()
+}
+
 const handleFocus = (e: FocusEvent) => {
   isFocus.value = true
   emits('focus', e)
@@ -47,6 +55,7 @@ const handleBlur = (e: FocusEvent) => {
 const handleClear = () => {
   innerValue.value = ''
   emits('update:modelValue', '')
+  emits('clear')
   emits('input', '')
   emits('change', '')
 }
@@ -57,6 +66,10 @@ const passwordVisible = ref(false)
 const togglePasswordVisible = () => {
   passwordVisible.value = !passwordVisible.value
 }
+
+defineExpose({
+  ref: inputRef
+})
 </script>
 
 <template>
@@ -89,9 +102,15 @@ const togglePasswordVisible = () => {
         <input
           class="vk-input__inner"
           v-model="innerValue"
+          v-bind="attrs"
           :type="showPassword ? (passwordVisible ? 'text' : 'password') : type"
           ref="inputRef"
           :disabled="disabled"
+          :placeholder="placeholder"
+          :readonly="readonly"
+          :autocomplete="autoComplete"
+          :autofocus="autoFocus"
+          :form="form"
           @input="handleInput"
           @change="handleChange"
           @focus="handleFocus"
@@ -99,7 +118,12 @@ const togglePasswordVisible = () => {
         />
 
         <!-- suffix slot -->
-        <span v-if="$slots.suffix || showClear || showPassword" class="vk-input__suffix">
+        <span
+          v-if="$slots.suffix || showClear || showPassword"
+          class="vk-input__suffix"
+          @click="keepFocus"
+          @mousedown.prevent
+        >
           <slot name="suffix" />
           <Icon v-if="showClear" icon="circle-xmark" class="vk-input__clear" @click="handleClear" />
           <Icon
@@ -127,9 +151,15 @@ const togglePasswordVisible = () => {
     <template v-else>
       <textarea
         v-model="innerValue"
+        v-bind="attrs"
         class="vk-textarea__wrapper"
         ref="inputRef"
         :disabled="disabled"
+        :placeholder="placeholder"
+        :readonly="readonly"
+        :autocomplete="autoComplete"
+        :autofocus="autoFocus"
+        :form="form"
         @input="handleInput"
         @change="handleChange"
         @focus="handleFocus"

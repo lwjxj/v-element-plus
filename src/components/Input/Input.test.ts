@@ -99,9 +99,17 @@ describe('Input', () => {
     await wrapper.find('.vk-input__clear').trigger('click')
     expect(input.element.value).toBe('')
     expect(wrapper.find('.vk-input__clear').exists()).toBeFalsy()
+    // 点击清空值不仅会触发clear事件，还会触发input和change事件
     expect(wrapper.emitted()).toHaveProperty('clear')
     expect(wrapper.emitted()).toHaveProperty('input')
     expect(wrapper.emitted()).toHaveProperty('change')
+    const inputEvent = wrapper.emitted('input')
+    const changeEvent = wrapper.emitted('change')
+    expect(inputEvent![0]).toEqual([''])
+    expect(changeEvent![0]).toEqual([''])
+
+    await input.trigger('blur')
+    expect(wrapper.emitted()).toHaveProperty('blur')
   })
 
   it('显示密码样式', async () => {
