@@ -1,8 +1,8 @@
-@import './vars.css';
+@import 'vars.pcss';
 @import './reset.css';
-@import '../components/Button/style.css';
+@import '../components/Button/style.pcss';
 @import '../components/Collapse/style.css';
-@import '../components/Icon/style.css';
+@import '../components/Icon/style.pcss';
 @import '../components/Tooltip/style.css';
-@import '../components/Message/style.css';
+@import '../components/Message/style.pcss';
 @import '../components/Input/style.css';
